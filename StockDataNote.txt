@@ -1,0 +1,10 @@
+symbol: Mã chứng khoán (ticker symbol), đại diện cho một cổ phiếu trên thị trường.
+price: Giá hiện tại (current price) của cổ phiếu tại thời điểm giao dịch.
+volume: Khối lượng giao dịch (volume)
+cp (Change Percentage): Phần trăm thay đổi (percentage change) so với giá tham chiếu hoặc giá mở cửa.
+rcp (Real Change Percentage): Là mức thay đổi thực tế của giá (real change percentage) tính theo giá đóng cửa trước đó.
+ba (Bid Amount): Giá đặt mua cao nhất (Bid Amount), tức là mức giá cao nhất mà người mua sẵn sàng trả.
+sa (Sell Amount):Giá chào bán thấp nhất (Sell Amount), tức là mức giá thấp nhất mà người bán sẵn sàng bán.
+hl (High-Low): Biên độ giá (High-Low), tức là mức chênh lệch giữa giá cao nhất và giá thấp nhất trong ngày.
+pcp (Previous Close Price): Giá đóng cửa ngày trước đó (Previous Close Price), thường được dùng để tính phần trăm thay đổi giá (cp).
+time: Thời gian giao dịch (time), là thời gian trong ngày mà thông tin này được ghi nhận (giờ, phút, giây).
