@@ -1,15 +1,15 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import to_date
+from pyspark.sql.functions import to_date, col, when, avg
 import sys
 
 # replace host cassandra !!! 
 spark = SparkSession.builder\
             .config("spark.app.name", "StockAnalyzer")\
             .config("spark.master", "spark://spark-master:7077")\
+            .config("spark.executor.memory", "512m") \
+            .config("spark.driver.memory", "512m") \
             .config("spark.jars.packages", "com.datastax.spark:spark-cassandra-connector_2.12:3.2.0")\
-            .config("spark.cassandra.connection.host", "172.18.0.9")\
-            .config("spark.cassandra.auth.username", "cassandra")\
-            .config("spark.cassandra.auth.password", "cassandra")\
+            .config("spark.cassandra.connection.host", "cassandra")\
             .enableHiveSupport()\
             .getOrCreate()
 spark.sparkContext.setLogLevel("WARN")
@@ -37,13 +37,13 @@ def statistic (date):
     data_df.filter(to_date(data_df.trading_date) == date).sort(data_df.volume.desc()).show(10)
 
 
-# def top_transaction_value(date):
-#     print("Top 10 cổ phiếu có giá trị giao dịch lớn nhất ngày {}".format(date))
-#     data_df.withColumn("transaction_value", data_df.volume * data_df.close)\
-#         .filter(to_date(data_df.trading_date) == date)\
-#         .sort(col("transaction_value").desc())\
-#         .select("symbol", "transaction_value")\
-#         .show(10)
+def top_transaction_value(date):
+    print("Top 10 cổ phiếu có giá trị giao dịch lớn nhất ngày {}".format(date))
+    data_df.withColumn("transaction_value", data_df.volume * data_df.close)\
+        .filter(to_date(data_df.trading_date) == date)\
+        .sort(col("transaction_value").desc())\
+        .select("symbol", "transaction_value")\
+        .show(10)
 
 # def price_change_summary(date):
 #     print("Tóm tắt tỷ lệ tăng/giảm cổ phiếu ngày {}".format(date))
@@ -119,8 +119,8 @@ if (sys.argv[1] == "statistic"):
     statistic(sys.argv[2])
 elif (sys.argv[1] == "history"):
     history(sys.argv[2])
-# elif (sys.argv[1] == "top_transaction_value"):
-#     top_transaction_value(sys.argv[2])
+elif (sys.argv[1] == "top_transaction_value"):
+    top_transaction_value(sys.argv[2])
 # elif (sys.argv[1] == "price_change_summary"):
 #     price_change_summary(sys.argv[2])
 # elif (sys.argv[1] == "daily_extremes"):
